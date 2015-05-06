@@ -5,7 +5,6 @@
  */
 chdir(dirname(__DIR__));
 
-include_once 'Module.php';
 include_once 'test/UnitTest.php';
 
 class Bootstrap
