@@ -68,6 +68,8 @@ class MessageViewModel extends ViewModel
 
     protected $template = 'blank';
 
+    protected $errorMessage = '';
+
     /**
      *
      * @param null|array|\Traversable $variables
@@ -92,9 +94,89 @@ class MessageViewModel extends ViewModel
             $this->setTextViewModel($textViewModel);
         }
 
+        $this->initFrom();
+        $this->initTo();
+        $this->initSubject();
+        $this->initInlineFiles();
+    }
+
+    private function initFrom()
+    {
+        $this->setFromAddress(
+            $this->getVariable('fromEmail'),
+            array(
+                'first' => $this->getVariable('fromFirst', ''),
+                'last' => $this->getVariable('fromLast', '')
+            )
+        );
+    }
+
+    private function initTo()
+    {
+        $this->addToRecipient(
+            $this->getVariable('toEmail'),
+            array(
+                'first' => $this->getVariable('toFirst', ''),
+                'last' => $this->getVariable('toLast', '')
+            )
+        );
+    }
+
+    private function initSubject()
+    {
         $subject = $this->getVariable(static::VAR_SUBJECT, '');
 
+        if (is_array($subject)) {
+            $args = array($subject['format']);
+            foreach($subject['args'] as $name) {
+                $args[] = $this->getVariable($name, '');
+            }
+
+            $subject = call_user_func_array('sprintf', $args);
+        }
+
         $this->setSubject($subject);
+    }
+
+    private function initInlineFiles()
+    {
+        $files = $this->getVariable('inline', array());
+        foreach ($files as $file) {
+            $this->addInlineImage($file);
+        }
+    }
+
+    public function isValid()
+    {
+        $this->errorMessage = '';
+
+        $missing = array();
+
+        if (empty($this->getVariable('fromEmail'))) {
+            $missing[] = 'fromEmail';
+        }
+
+        if (empty($this->getVariable('toEmail'))) {
+            $missing[] = 'toEmail';
+        }
+
+        if (empty($this->getVariable(static::VAR_SUBJECT))) {
+            $missing[] = static::VAR_SUBJECT;
+        }
+
+        if (empty($missing)) {
+            return true;
+        }
+
+        $this->errorMessage =
+            'Missing Required Field(s): ' . implode(', ', $missing);
+
+        return false;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
 
     public function __call($method, $arguments)
