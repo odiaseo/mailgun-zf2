@@ -16,15 +16,17 @@ return array(
     'service_manager' => array(
         'invokables' => array(
             'MailgunZf2\View\Renderer\MessageRenderer' => 'MailgunZf2\View\Renderer\MessageRenderer',
-            'MailgunZf2\Mvc\MailgunFinishListener' => 'MailgunZf2\Mvc\MailgunFinishListener',
+            'MailgunZf2\Mvc\MailgunFinishListener'     => 'MailgunZf2\Mvc\MailgunFinishListener',
         ),
         'factories' => array(
             'MailgunZf2\Options\MailgunOptions' => 'MailgunZf2\Service\MailgunOptionsFactory',
+            'MailgunZf2\Mail\MailgunSender'     => 'MailgunZf2\Service\MailgunSenderFactory',
         ),
         'aliases' => array(
-            'MailgunRenderer' => 'MailgunZf2\View\Renderer\MessageRenderer',
+            'MailgunRenderer'       => 'MailgunZf2\View\Renderer\MessageRenderer',
             'MailgunFinishListener' => 'MailgunZf2\Mvc\MailgunFinishListener',
-            'MailgunOptions' => 'MailgunZf2\Options\MailgunOptions',
+            'MailgunOptions'        => 'MailgunZf2\Options\MailgunOptions',
+            'MailgunSender'         => 'MailgunZf2\Mail\MailgunSender',
         ),
     ),
     'controllers' => array(

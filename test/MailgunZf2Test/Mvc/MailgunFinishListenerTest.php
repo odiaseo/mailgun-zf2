@@ -50,6 +50,48 @@ class MailgunFinishListenerTest extends UnitTest
         $this->messageAssertions($views[1]->getMessage());
     }
 
+    public function testSend()
+    {
+        $email = getenv('TEST_MAILGUNZF2_EMAIL');
+
+        if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return;
+        }
+
+        $views = $this->views();
+
+        foreach($views as $message) {
+            $message->addToRecipient($email);
+            $message->setFromAddress($email);
+        }
+
+        $event = new MvcEvent();
+
+        $event->setParam(MailgunFinishListener::PARAM_MAILGUN, $views);
+
+        $this->listener->render($event);
+        $reponses = $this->listener->send($event);
+
+        $this->messageAssertions($views[0]->getMessage());
+        $this->messageAssertions($views[1]->getMessage());
+
+        $this->assertCount(2, $reponses);
+        foreach($reponses as $reponse) {
+            $this->responseAssertions($reponse);
+        }
+
+    }
+
+    protected function responseAssertions($reponse)
+    {
+        $this->assertNotInstanceOf('Exception', $reponse);
+        $this->assertInstanceOf('stdClass', $reponse);
+
+        $this->assertObjectHasAttribute('http_response_code', $reponse);
+        $this->assertEquals(200, $reponse->http_response_code);
+
+    }
+
     protected function messageAssertions($message)
     {
         $this->assertArrayHasKey('subject', $message);

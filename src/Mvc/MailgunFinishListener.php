@@ -9,6 +9,7 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use MailgunZf2\View\Renderer\MessageRenderer;
 use MailgunZf2\View\Model\MessageViewModel;
+use MailgunZf2\Mail\MailgunSender;
 
 class MailgunFinishListener implements ListenerAggregateInterface, ServiceLocatorAwareInterface
 {
@@ -46,5 +47,31 @@ class MailgunFinishListener implements ListenerAggregateInterface, ServiceLocato
     }
 
     public function send(MvcEvent $event)
-    {}
+    {
+        $messages = $event->getParam(static::PARAM_MAILGUN, false);
+
+        if (empty($messages)) {
+            return;
+        }
+
+        /**
+         * @var MailgunSender $sender
+         */
+        $sender = $this->serviceLocator->get('MailgunSender');
+
+        $responses = array();
+        foreach ($messages as $message) {
+            if (! $message instanceof MessageViewModel) {
+                continue;
+            }
+
+            try {
+                $responses[] = $sender->send($message);
+            } catch (\Exception $e) {
+                $responses[] = $e;
+            }
+        }
+
+        return $responses;
+    }
 }
