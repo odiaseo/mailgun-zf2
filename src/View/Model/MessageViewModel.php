@@ -102,8 +102,14 @@ class MessageViewModel extends ViewModel
 
     private function initFrom()
     {
+        $email = $this->getVariable('fromEmail', '');
+
+        if ($email === '') {
+            return;
+        }
+
         $this->setFromAddress(
-            $this->getVariable('fromEmail'),
+            $email,
             array(
                 'first' => $this->getVariable('fromFirst', ''),
                 'last' => $this->getVariable('fromLast', '')
@@ -113,8 +119,14 @@ class MessageViewModel extends ViewModel
 
     private function initTo()
     {
+        $email = $this->getVariable('toEmail', '');
+
+        if ($email === '') {
+            return;
+        }
+
         $this->addToRecipient(
-            $this->getVariable('toEmail'),
+            $email,
             array(
                 'first' => $this->getVariable('toFirst', ''),
                 'last' => $this->getVariable('toLast', '')
@@ -125,6 +137,10 @@ class MessageViewModel extends ViewModel
     private function initSubject()
     {
         $subject = $this->getVariable(static::VAR_SUBJECT, '');
+
+        if ($subject === '') {
+            return;
+        }
 
         if (is_array($subject)) {
             $args = array($subject['format']);
