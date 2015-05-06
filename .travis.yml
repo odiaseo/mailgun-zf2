@@ -1,0 +1,11 @@
+language: php
+php:
+- '5.5'
+env:
+  global:
+  - secure: rGaTdJtxmhYNLDutUGqXRwpO44n86+TEu+GWjUdiHa3RzUoOuD7mPtpqQJYeHNm7Q300eFQOCmK6+JZLwhPU1LLH2jptICHwaUX+aBGJa5PrNjB6bhIA0j8SEuwE9tEHNJelg2wlZyBq08BdAsbq9aFjXfGg1tyKFQzbO8QBqTw=
+  - secure: viDA/BQaUVwHSPze39fNcPQA1xdpjR43l4E2eLOOaG+uZWEtcisqnk8F6M4dwb7J5vAnXphaHpvEOaqXa7XNGGon/C75xsGSI9BAm8mHVkTCri6X72/vkOowGDhgHl3eJD1qNPaijx2SSos20X97jHG0u9oSJ8qdELDD23bLKJA=
+install:
+- composer install --perfer-dist -o
+script:
+- composer test
