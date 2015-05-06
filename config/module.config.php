@@ -29,11 +29,13 @@ return array(
             'MailgunSender'         => 'MailgunZf2\Mail\MailgunSender',
         ),
     ),
-    'controllers' => array(
+
+    'controller_plugins' => array(
         'invokables' => array(
-            'MailgunZf2\Controller\Index' => 'MailgunZf2\Controller\IndexController'
-        ),
+            'mailgun' => 'MailgunZf2\Controller\Plugin\MailgunControllerPlugin',
+        )
     ),
+
     'view_manager' => array(
         'template_map' => array(
             'mailgun/blank'           => __DIR__ . '/../view/blank.phtml',
