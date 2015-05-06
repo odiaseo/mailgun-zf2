@@ -16,6 +16,13 @@ class Module
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager = $e->getApplication()->getEventManager();
+        $serviceManager = $e->getApplication()->getServiceManager();
+
+        // lookup the listener
+        $mgListener = $serviceManager->get('MailgunFinishListener');
+
+        //attach it
+        $eventManager->attachAggregate($mgListener);
     }
 
     public function getConfig()
