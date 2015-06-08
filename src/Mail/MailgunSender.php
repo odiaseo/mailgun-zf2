@@ -19,10 +19,10 @@ class MailgunSender
      */
     private $mg;
 
-    public function __construct(MailgunOptions $options)
+    public function __construct(Mailgun $mg, MailgunOptions $options)
     {
+        $this->mg = $mg;
         $this->options = $options;
-        $this->mg = new Mailgun($this->options->getApiKey());
     }
 
     public function send(MessageViewModel $message)

@@ -12,6 +12,7 @@ $config = array(
 
     'mailgun' => array(
         'apiKey' => getenv('TEST_MAILGUNZF2_APIKEY'),
+        'publicApiKey' => getenv('TEST_MAILGUNZF2_PUBLICAPIKEY'),
         'domain' => getenv('TEST_MAILGUNZF2_DOMAIN'),
     ),
 

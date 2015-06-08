@@ -9,8 +9,14 @@ use Zend\Stdlib\ArrayUtils;
 class MailgunOptionsFactory implements FactoryInterface
 {
     private $default_options = array(
-        'api_key' => '',
-        'domain' => 'example.com'
+        'apiKey' => '',
+        'publicApiKey' => '',
+        'domain' => 'example.com',
+
+        // optional defaults
+        'apiEndpoint' => 'api.mailgun.net',
+        'apiVersion' => 'v2',
+        'ssl' => true,
     );
 
     public function createService(ServiceLocatorInterface $serviceLocator)

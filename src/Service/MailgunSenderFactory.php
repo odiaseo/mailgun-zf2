@@ -21,6 +21,8 @@ class MailgunSenderFactory implements FactoryInterface
             $options = new MailgunOptions();
         }
 
-        return new MailgunSender($options);
+        $mg = $serviceLocator->get('Mailgun\Mailgun');
+
+        return new MailgunSender($mg, $options);
     }
 }

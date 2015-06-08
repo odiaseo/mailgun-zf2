@@ -10,7 +10,13 @@
 return array(
     'mailgun' => array(
         'apiKey' => 'YOUR_API_KEY',
+        'publicApiKey' => 'YOUR_API_KEY',
         'domain' => 'YOUR_DOMAIN',
+
+        // optional, defaults
+        'apiEndpoint' => 'api.mailgun.net',
+        'apiVersion' => 'v2',
+        'ssl' => true,
     ),
 
     'service_manager' => array(
@@ -21,6 +27,7 @@ return array(
         'factories' => array(
             'MailgunZf2\Options\MailgunOptions' => 'MailgunZf2\Service\MailgunOptionsFactory',
             'MailgunZf2\Mail\MailgunSender'     => 'MailgunZf2\Service\MailgunSenderFactory',
+            'Mailgun\Mailgun'                   => 'MailgunZf2\Service\MailgunFactory',
         ),
         'aliases' => array(
             'MailgunRenderer'       => 'MailgunZf2\View\Renderer\MessageRenderer',

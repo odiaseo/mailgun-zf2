@@ -1,5 +1,6 @@
 # Mailgun ZF2 Module
 [![Build Status](https://travis-ci.org/ebittleman/mailgun-zf2.svg?branch=master)](https://travis-ci.org/ebittleman/mailgun-zf2)
+[![Build Status](https://img.shields.io/packagist/v/ebittleman/mailgun-zf2.svg)](https://packagist.org/packages/ebittleman/mailgun-zf2)
 
 This is a super new library and no guarantees are made on anything. 
 It pretty much just hooks 
