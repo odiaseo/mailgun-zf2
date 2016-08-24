@@ -30,7 +30,6 @@ use Zend\View\Model\ModelInterface;
  * @method string addCustomData(string $customName, mixed $data)
  * @method string addCustomParameter(string $parameterName, mixed $data)
  * @method setMessage(string $message)
- * @method array getMessage()
  * @method array getFiles()
  */
 class MessageViewModel extends ViewModel

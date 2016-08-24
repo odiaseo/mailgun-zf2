@@ -1,15 +1,15 @@
 <?php
 namespace MailgunZf2\Service;
 
+use Interop\Container\ContainerInterface;
 use MailgunZf2\Mail\MailgunSender;
 use MailgunZf2\Options\MailgunOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\FActory\FactoryInterface;
 
 class MailgunSenderFactory implements FactoryInterface
 {
 
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array $options = null)
     {
         $options = null;
 
@@ -17,7 +17,7 @@ class MailgunSenderFactory implements FactoryInterface
             $options = $serviceLocator->get('MailgunOptions');
         }
 
-        if (! $options instanceof MailgunOptions) {
+        if (!$options instanceof MailgunOptions) {
             $options = new MailgunOptions();
         }
 

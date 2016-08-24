@@ -20,11 +20,9 @@ return array(
     ),
 
     'service_manager' => array(
-        'invokables' => array(
-            'MailgunZf2\View\Renderer\MessageRenderer' => 'MailgunZf2\View\Renderer\MessageRenderer',
-            'MailgunZf2\Mvc\MailgunFinishListener'     => 'MailgunZf2\Mvc\MailgunFinishListener',
-        ),
         'factories' => array(
+            'MailgunZf2\View\Renderer\MessageRenderer' => 'MailgunZf2\View\Renderer\MessageRendererFactory',
+            'MailgunZf2\Mvc\MailgunFinishListener'     => 'MailgunZf2\Mvc\MailgunFinishListenerFactory',
             'MailgunZf2\Options\MailgunOptions' => 'MailgunZf2\Service\MailgunOptionsFactory',
             'MailgunZf2\Mail\MailgunSender'     => 'MailgunZf2\Service\MailgunSenderFactory',
             'Mailgun\Mailgun'                   => 'MailgunZf2\Service\MailgunFactory',

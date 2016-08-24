@@ -11,6 +11,7 @@ class Bootstrap
 {
     public static $app_config = array(
         'modules' => array(
+            'Zend\Router',
             'MailgunZf2'
         ),
         'module_listener_options' => array(

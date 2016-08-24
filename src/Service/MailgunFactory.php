@@ -1,22 +1,25 @@
 <?php
 namespace MailgunZf2\Service;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
 use Mailgun\Mailgun;
 use MailgunZf2\Options\MailgunOptions;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 class MailgunFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator, $requestedName, array $options = null)
     {
-        if (! $serviceLocator->has('MailgunOptions')) {
-            return;
+        if (!$serviceLocator->has('MailgunOptions')) {
+            return null;
         }
 
-        $options = $serviceLocator->get('MailgunOptions');
+        /** @var MailgunOptions $options */
 
-        $options instanceof MailgunOptions;
+        $options = $serviceLocator->get('MailgunOptions');
+        if (!$options instanceof MailgunOptions) {
+            $options = new MailgunOptions();
+        }
 
         return new Mailgun(
             $options->getApiKey(),

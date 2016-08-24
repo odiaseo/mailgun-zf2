@@ -1,11 +1,11 @@
-# Mailgun ZF2 Module
+# Mailgun ZF3 Module
 [![Build Status](https://travis-ci.org/ebittleman/mailgun-zf2.svg?branch=master)](https://travis-ci.org/ebittleman/mailgun-zf2)
 [![Build Status](https://img.shields.io/packagist/v/ebittleman/mailgun-zf2.svg)](https://packagist.org/packages/ebittleman/mailgun-zf2)
 
 This is a super new library and no guarantees are made on anything. 
 It pretty much just hooks 
 [mailgun/mailgun-php](https://github.com/mailgun/mailgun-php) 
-directly into Zend Framework 2 Have fun.
+directly into Zend Framework 3 Have fun.
 
 ## Installation
 
@@ -47,7 +47,7 @@ You will need to enable the module by adding it to your application config
 
 So the basic idea here is that the MessageViewModel is pretty much just an
 view adapter wrapped around `Mailgun\MessagesMessageBuilder` and it gets passed
-to a controller plugin that will prepare that message to be sent at ZF2's MvcEvent::EVENT_FINSH
+to a controller plugin that will prepare that message to be sent at ZF3's MvcEvent::EVENT_FINSH
 event
 
     namespace MailgunZf2\Controller;

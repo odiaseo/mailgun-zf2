@@ -2,22 +2,36 @@
 namespace MailgunZf2\View\Renderer;
 
 use MailgunZf2\View\Model\MessageViewModel;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Stdlib\Response;
 use Zend\View\Renderer\PhpRenderer;
 use Zend\View\Strategy\PhpRendererStrategy;
 use Zend\View\View;
 
-class MessageRenderer implements ServiceLocatorAwareInterface
+class MessageRenderer
 {
-    use ServiceLocatorAwareTrait;
-
     /**
      *
      * @var View
      */
     private $view;
+
+    protected $serviceLocator;
+
+    /**
+     * @return mixed
+     */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
+
+    /**
+     * @param mixed $serviceLocator
+     */
+    public function setServiceLocator($serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
 
     public function render(MessageViewModel $message)
     {
@@ -50,7 +64,7 @@ class MessageRenderer implements ServiceLocatorAwareInterface
 
         $this->view = new View();
         $this->view->setEventManager($this->serviceLocator->get('EventManager'));
-        $this->view->getEventManager()->attach($rendererStrategy);
+        $rendererStrategy->attach($this->view->getEventManager());
 
         return $this->view;
     }

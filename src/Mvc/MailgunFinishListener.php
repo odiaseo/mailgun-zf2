@@ -1,24 +1,45 @@
 <?php
 namespace MailgunZf2\Mvc;
 
+use Interop\Container\ContainerInterface;
+use MailgunZf2\Mail\MailgunSender;
+use MailgunZf2\View\Model\MessageViewModel;
+use MailgunZf2\View\Renderer\MessageRenderer;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
 use Zend\Mvc\MvcEvent;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorAwareTrait;
-use MailgunZf2\View\Renderer\MessageRenderer;
-use MailgunZf2\View\Model\MessageViewModel;
-use MailgunZf2\Mail\MailgunSender;
 
-class MailgunFinishListener implements ListenerAggregateInterface, ServiceLocatorAwareInterface
+class MailgunFinishListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
-    use ServiceLocatorAwareTrait;
 
     const PARAM_MAILGUN = '__MAILGUN__';
 
-    public function attach(EventManagerInterface $events)
+    private $serviceLocator;
+
+    public function __construct(ContainerInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
+
+    /**
+     * @param mixed $serviceLocator
+     */
+    public function setServiceLocator($serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_FINISH, array($this, 'render'), 100);
         $this->listeners[] = $events->attach(MvcEvent::EVENT_FINISH, array($this, 'send'), 100);
@@ -38,7 +59,7 @@ class MailgunFinishListener implements ListenerAggregateInterface, ServiceLocato
         $renderer = $this->serviceLocator->get('MailgunRenderer');
 
         foreach ($messages as $message) {
-            if (! $message instanceof MessageViewModel) {
+            if (!$message instanceof MessageViewModel) {
                 continue;
             }
 
@@ -61,7 +82,7 @@ class MailgunFinishListener implements ListenerAggregateInterface, ServiceLocato
 
         $responses = array();
         foreach ($messages as $message) {
-            if (! $message instanceof MessageViewModel) {
+            if (!$message instanceof MessageViewModel) {
                 continue;
             }
 

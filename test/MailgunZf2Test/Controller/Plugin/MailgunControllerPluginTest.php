@@ -4,7 +4,7 @@ namespace MailgunZf2Test\Controller\Plugin;
 use MailgunZf2\Controller\IndexController;
 use MailgunZf2Test\UnitTest;
 use Zend\Stdlib\Request;
-use Zend\Mvc\Router\RouteMatch;
+use Zend\Router\RouteMatch;
 use MailgunZf2\Mvc\MailgunFinishListener;
 
 class MailgunControllerPluginTest extends UnitTest

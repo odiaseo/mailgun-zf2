@@ -20,9 +20,7 @@ class Module
 
         // lookup the listener
         $mgListener = $serviceManager->get('MailgunFinishListener');
-
-        //attach it
-        $eventManager->attachAggregate($mgListener);
+        $mgListener->attach($eventManager);
     }
 
     public function getConfig()
