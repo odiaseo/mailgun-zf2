@@ -1,5 +1,5 @@
 {
-    "name": "ebittleman/mailgun-zf2",
+    "name": "odiaseo/mailgun-zf2",
     "version": "1.0.4",
     "description": "ZF2 Wrapper for Mailgun",
     "license": "The MIT License (MIT)",
