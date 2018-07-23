@@ -11,7 +11,6 @@
     "homepage": "https://github.com/ebittleman/mailgun-zf2",
     "require": {
         "php": ">=5.6",
-        "mailgun/mailgun-php": "~1.7.2",
         "zendframework/zendframework": "^3.0"
     },
     "require-dev": {
