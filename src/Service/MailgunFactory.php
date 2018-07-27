@@ -1,4 +1,5 @@
 <?php
+
 namespace MailgunZf2\Service;
 
 use Interop\Container\ContainerInterface;
@@ -21,11 +22,6 @@ class MailgunFactory implements FactoryInterface
             $options = new MailgunOptions();
         }
 
-        return new Mailgun(
-            $options->getApiKey(),
-            $options->getApiEndpoint(),
-            $options->getApiVersion(),
-            $options->getSsl()
-        );
+        return Mailgun::create($options->getApiKey());
     }
 }
